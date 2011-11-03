@@ -1,0 +1,13 @@
+;
+; This file contains the settings for the run.php script.
+; setup your username and password, and you'll be able to run API calls from the command line
+;
+; This system should really only be used for development purposes.
+;
+php = /usr/bin/php
+api = '/ciniki/dev/site/ciniki-rest.php'
+api_key = ''					; The API key generated for ciniki-manage
+username = 'username'	
+password = 'password'
+prompt = "api> "
+log = "/var/log/apache2/access_log"
