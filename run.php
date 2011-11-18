@@ -71,7 +71,8 @@ while( $line !== FALSE ) {
 		check_logs();
 	}
 	else if( $last_cmd == 'logs' && preg_match('/^([0-9]+)$/', $line, $matches) ) {
-		print "running option " . $last_options[($matches[1]-1)]['method'] . "\n";
+//		print "======================== running " . $last_options[($matches[1]-1)]['method'] . "\n";
+		print "============================================================================\n";
 		run_api($last_options[($matches[1]-1)]['method'], $last_options[($matches[1]-1)]['args']);
 	}
 	else if( preg_match('/^(ciniki\.[a-z0-9A-Z]+\.[a-zA-Z0-9]+)\s*(.*)$/', $line, $matches) ) {
