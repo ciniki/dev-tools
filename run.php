@@ -30,7 +30,7 @@ if( isset($argv[1]) && $argv[1] != '' ) {
 }
 
 $usage = "The following commands are valid: \n\n"
-	. "logs - list the last 5 log lines from $log and pick which one to run.\n"
+	. "logs - list the last 15 log lines from $log and pick which one to run.\n"
 	. "help - print this message\n"
 	. "quit|exit - Exit script\n\n";
 
@@ -75,7 +75,7 @@ while( $line !== FALSE ) {
 		print "============================================================================\n";
 		run_api($last_options[($matches[1]-1)]['method'], $last_options[($matches[1]-1)]['args']);
 	}
-	else if( preg_match('/^(ciniki\.[a-z0-9A-Z]+\.[a-zA-Z0-9]+)\s*(.*)$/', $line, $matches) ) {
+	else if( preg_match('/^([a-zA-Z0-9]+\.[a-z0-9A-Z]+\.[a-zA-Z0-9]+)\s*(.*)$/', $line, $matches) ) {
 		$args = '';
 		if( isset($matches[2]) ) {
 			$args = $matches[2];
@@ -93,12 +93,12 @@ while( $line !== FALSE ) {
 
 function check_logs() {
 	$log = $GLOBALS['log'];
-	$logs = `tail -5 $log`;
+	$logs = `tail -25 $log`;
 	$log_lines = explode("\n", $logs);
 	$options = array();
 	$num_options = 0;
 	foreach($log_lines as $lline) {
-		if( preg_match('/\?method=([^&]*)&api_key=([^&]*)&auth_token=([^&]*)(.*)&format=json/', $lline, $matches) ) {
+		if( preg_match('/\?method=([^&]*)&api_key=([^&]*)&auth_token=([^&]*)(.*)/', $lline, $matches) ) {
 			$options[$num_options] = array('log'=>$lline, 'method'=>$matches[1], 'api_key'=>$matches[2], 'auth_token'=>$matches[3], 
 				'args'=>$matches[4]);
 			$num_options++;
