@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cd site/ciniki-api/alerts; git checkout master; git remote add push git@github.com:ciniki/api-alerts.git; cd ../../..
+cd site/ciniki-api/appointments; git checkout master; git remote add push git@github.com:ciniki/api-appointments.git; cd ../../..
 cd site/ciniki-api/businesses; git checkout master; git remote add push git@github.com:ciniki/api-businesses.git; cd ../../..
 cd site/ciniki-api/bugs; git checkout master; git remote add push git@github.com:ciniki/api-bugs.git; cd ../../..
 cd site/ciniki-api/calendars; git checkout master; git remote add push git@github.com:ciniki/api-calendars.git; cd ../../..
