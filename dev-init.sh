@@ -33,6 +33,7 @@ cd site/ciniki-manage/businesses; git checkout master; git remote add push git@g
 cd site/ciniki-manage/calendars; git checkout master; git remote add push git@github.com:ciniki/manage-calendars.git; cd ../../..
 cd site/ciniki-manage/core; git checkout master; git remote add push git@github.com:ciniki/manage-core.git; cd ../../..
 cd site/ciniki-manage/customers; git checkout master; git remote add push git@github.com:ciniki/manage-customers.git; cd ../../..
+cd site/ciniki-manage/documentation; git checkout master; git remote add push git@github.com:ciniki/manage-documentation.git; cd ../../..
 cd site/ciniki-manage/features; git checkout master; git remote add push git@github.com:ciniki/manage-features.git; cd ../../..
 cd site/ciniki-manage/friends; git checkout master; git remote add push git@github.com:ciniki/manage-friends.git; cd ../../..
 cd site/ciniki-manage/help; git checkout master; git remote add push git@github.com:ciniki/manage-help.git; cd ../../..
