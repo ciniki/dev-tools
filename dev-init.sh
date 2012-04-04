@@ -5,6 +5,7 @@ cd site/ciniki-api/atdo; git checkout master; git remote add push git@github.com
 cd site/ciniki-api/bugs; git checkout master; git remote add push git@github.com:ciniki/api-bugs.git; cd ../../..
 cd site/ciniki-api/businesses; git checkout master; git remote add push git@github.com:ciniki/api-businesses.git; cd ../../..
 cd site/ciniki-api/calendars; git checkout master; git remote add push git@github.com:ciniki/api-calendars.git; cd ../../..
+cd site/ciniki-api/clicktracker; git checkout master; git remote add push git@github.com:ciniki/api-clicktracker.git; cd ../../..
 cd site/ciniki-api/core; git checkout master; git remote add push git@github.com:ciniki/api-core.git; cd ../../..
 cd site/ciniki-api/cron; git checkout master; git remote add push git@github.com:ciniki/api-cron.git; cd ../../..
 cd site/ciniki-api/customers; git checkout master; git remote add push git@github.com:ciniki/api-customers.git; cd ../../..
