@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cd site/ciniki-api/alerts; git checkout master; git remote add push git@github.com:ciniki/api-alerts.git; cd ../../..
+cd site/ciniki-api/artcatalog; git checkout master; git remote add push git@github.com:ciniki/api-artcatalog.git; cd ../../..
 cd site/ciniki-api/atdo; git checkout master; git remote add push git@github.com:ciniki/api-atdo.git; cd ../../..
 cd site/ciniki-api/bugs; git checkout master; git remote add push git@github.com:ciniki/api-bugs.git; cd ../../..
 cd site/ciniki-api/businesses; git checkout master; git remote add push git@github.com:ciniki/api-businesses.git; cd ../../..
@@ -28,10 +29,12 @@ cd site/ciniki-api/users; git checkout master; git remote add push git@github.co
 cd site/ciniki-api/wineproduction; git checkout master; git remote add push git@github.com:ciniki/api-wineproduction.git; cd ../../..
 
 cd site/ciniki-manage/alerts; git checkout master; git remote add push git@github.com:ciniki/manage-alerts.git; cd ../../..
+cd site/ciniki-manage/artcatalog; git checkout master; git remote add push git@github.com:ciniki/manage-artcatalog.git; cd ../../..
 cd site/ciniki-manage/atdo; git checkout master; git remote add push git@github.com:ciniki/manage-atdo.git; cd ../../..
 cd site/ciniki-manage/bugs; git checkout master; git remote add push git@github.com:ciniki/manage-bugs.git; cd ../../..
 cd site/ciniki-manage/businesses; git checkout master; git remote add push git@github.com:ciniki/manage-businesses.git; cd ../../..
 cd site/ciniki-manage/calendars; git checkout master; git remote add push git@github.com:ciniki/manage-calendars.git; cd ../../..
+cd site/ciniki-manage/clicktracker; git checkout master; git remote add push git@github.com:ciniki/manage-clicktracker.git; cd ../../..
 cd site/ciniki-manage/core; git checkout master; git remote add push git@github.com:ciniki/manage-core.git; cd ../../..
 cd site/ciniki-manage/customers; git checkout master; git remote add push git@github.com:ciniki/manage-customers.git; cd ../../..
 cd site/ciniki-manage/documentation; git checkout master; git remote add push git@github.com:ciniki/manage-documentation.git; cd ../../..
