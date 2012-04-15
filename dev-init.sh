@@ -26,6 +26,7 @@ cd site/ciniki-api/systemdocs; git checkout master; git remote add push git@gith
 cd site/ciniki-api/timesheets; git checkout master; git remote add push git@github.com:ciniki/api-timesheets.git; cd ../../..
 cd site/ciniki-api/toolbox; git checkout master; git remote add push git@github.com:ciniki/api-toolbox.git; cd ../../..
 cd site/ciniki-api/users; git checkout master; git remote add push git@github.com:ciniki/api-users.git; cd ../../..
+cd site/ciniki-api/web; git checkout master; git remote add push git@github.com:ciniki/api-web.git; cd ../../..
 cd site/ciniki-api/wineproduction; git checkout master; git remote add push git@github.com:ciniki/api-wineproduction.git; cd ../../..
 
 cd site/ciniki-manage/alerts; git checkout master; git remote add push git@github.com:ciniki/manage-alerts.git; cd ../../..
@@ -51,6 +52,7 @@ cd site/ciniki-manage/sysadmin; git checkout master; git remote add push git@git
 cd site/ciniki-manage/toolbox; git checkout master; git remote add push git@github.com:ciniki/manage-toolbox.git; cd ../../..
 cd site/ciniki-manage/users; git checkout master; git remote add push git@github.com:ciniki/manage-users.git; cd ../../..
 cd site/ciniki-manage/wineproduction; git checkout master; git remote add push git@github.com:ciniki/manage-wineproduction.git; cd ../../..
+cd site/ciniki-manage/web; git checkout master; git remote add push git@github.com:ciniki/manage-web.git; cd ../../..
 
 cd site/ciniki-manage-themes/default; git checkout master; git remote add push git@github.com:ciniki/manage-theme-default.git; cd ../../..
 
