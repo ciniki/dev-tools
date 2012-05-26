@@ -12,7 +12,6 @@ cd site/ciniki-api/cron; git checkout master; git remote add push git@github.com
 cd site/ciniki-api/customers; git checkout master; git remote add push git@github.com:ciniki/api-customers.git; cd ../../..
 cd site/ciniki-api/documentation; git checkout master; git remote add push git@github.com:ciniki/api-documentation.git; cd ../../..
 cd site/ciniki-api/events; git checkout master; git remote add push git@github.com:ciniki/api-events.git; cd ../../..
-cd site/ciniki-api/friends; git checkout master; git remote add push git@github.com:ciniki/api-friends.git; cd ../../..
 cd site/ciniki-api/healthchecks; git checkout master; git remote add push git@github.com:ciniki/api-healthchecks.git; cd ../../..
 cd site/ciniki-api/images; git checkout master; git remote add push git@github.com:ciniki/api-images.git; cd ../../..
 cd site/ciniki-api/inventory; git checkout master; git remote add push git@github.com:ciniki/api-inventory.git; cd ../../..
@@ -41,7 +40,6 @@ cd site/ciniki-manage/core; git checkout master; git remote add push git@github.
 cd site/ciniki-manage/customers; git checkout master; git remote add push git@github.com:ciniki/manage-customers.git; cd ../../..
 cd site/ciniki-manage/documentation; git checkout master; git remote add push git@github.com:ciniki/manage-documentation.git; cd ../../..
 cd site/ciniki-manage/events; git checkout master; git remote add push git@github.com:ciniki/manage-events.git; cd ../../..
-cd site/ciniki-manage/friends; git checkout master; git remote add push git@github.com:ciniki/manage-friends.git; cd ../../..
 cd site/ciniki-manage/help; git checkout master; git remote add push git@github.com:ciniki/manage-help.git; cd ../../..
 cd site/ciniki-manage/journal; git checkout master; git remote add push git@github.com:ciniki/manage-journal.git; cd ../../..
 cd site/ciniki-manage/links; git checkout master; git remote add push git@github.com:ciniki/manage-links.git; cd ../../..
