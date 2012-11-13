@@ -120,7 +120,7 @@ function login() {
 	$rest_args = "method=ciniki.users.auth&api_key=" . $GLOBALS['api_key'] ."&auth_token=&username=" . $GLOBALS['username'] . "&password=" . $GLOBALS['password'];
 	$login = `$php $api '$rest_args'`;
 	$last_login = time();
-//	print_r($login);
+	print_r($login);
 	if( preg_match('/auth token=\"([a-zA-Z0-9]*)\"/', $login, $matches) ) {
 		$GLOBALS['auth_token'] = $matches[1];
 //		print_r($GLOBALS['auth_token']);

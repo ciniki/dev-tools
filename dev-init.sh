@@ -22,6 +22,7 @@ cd site/ciniki-api/products; git checkout master; git remote add push git@github
 cd site/ciniki-api/projects; git checkout master; git remote add push git@github.com:ciniki/api-projects.git; cd ../../..
 cd site/ciniki-api/questions; git checkout master; git remote add push git@github.com:ciniki/api-questions.git; cd ../../..
 cd site/ciniki-api/scheduling; git checkout master; git remote add push git@github.com:ciniki/api-scheduling.git; cd ../../..
+cd site/ciniki-api/services; git checkout master; git remote add push git@github.com:ciniki/api-services.git; cd ../../..
 cd site/ciniki-api/subscriptions; git checkout master; git remote add push git@github.com:ciniki/api-subscriptions.git; cd ../../..
 cd site/ciniki-api/systemdocs; git checkout master; git remote add push git@github.com:ciniki/api-systemdocs.git; cd ../../..
 cd site/ciniki-api/timesheets; git checkout master; git remote add push git@github.com:ciniki/api-timesheets.git; cd ../../..
