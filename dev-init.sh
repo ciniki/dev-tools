@@ -50,6 +50,7 @@ cd site/ciniki-manage/monitoring; git checkout master; git remote add push git@g
 cd site/ciniki-manage/products; git checkout master; git remote add push git@github.com:ciniki/manage-products.git; cd ../../..
 cd site/ciniki-manage/projects; git checkout master; git remote add push git@github.com:ciniki/manage-projects.git; cd ../../..
 cd site/ciniki-manage/questions; git checkout master; git remote add push git@github.com:ciniki/manage-questions.git; cd ../../..
+cd site/ciniki-manage/services; git checkout master; git remote add push git@github.com:ciniki/manage-services.git; cd ../../..
 cd site/ciniki-manage/subscriptions; git checkout master; git remote add push git@github.com:ciniki/manage-subscriptions.git; cd ../../..
 cd site/ciniki-manage/sysadmin; git checkout master; git remote add push git@github.com:ciniki/manage-sysadmin.git; cd ../../..
 cd site/ciniki-manage/systemdocs; git checkout master; git remote add push git@github.com:ciniki/manage-systemdocs.git; cd ../../..
