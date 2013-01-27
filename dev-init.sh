@@ -1,6 +1,5 @@
 #!/bin/bash
 
-cd site/ciniki-api/alerts; git checkout master; git remote add push git@github.com:ciniki/api-alerts.git; cd ../../..
 cd site/ciniki-api/artcatalog; git checkout master; git remote add push git@github.com:ciniki/api-artcatalog.git; cd ../../..
 cd site/ciniki-api/atdo; git checkout master; git remote add push git@github.com:ciniki/api-atdo.git; cd ../../..
 cd site/ciniki-api/bugs; git checkout master; git remote add push git@github.com:ciniki/api-bugs.git; cd ../../..
@@ -12,26 +11,21 @@ cd site/ciniki-api/cron; git checkout master; git remote add push git@github.com
 cd site/ciniki-api/customers; git checkout master; git remote add push git@github.com:ciniki/api-customers.git; cd ../../..
 cd site/ciniki-api/events; git checkout master; git remote add push git@github.com:ciniki/api-events.git; cd ../../..
 cd site/ciniki-api/filedepot; git checkout master; git remote add push git@github.com:ciniki/api-filedepot.git; cd ../../..
-cd site/ciniki-api/healthchecks; git checkout master; git remote add push git@github.com:ciniki/api-healthchecks.git; cd ../../..
 cd site/ciniki-api/images; git checkout master; git remote add push git@github.com:ciniki/api-images.git; cd ../../..
-cd site/ciniki-api/inventory; git checkout master; git remote add push git@github.com:ciniki/api-inventory.git; cd ../../..
 cd site/ciniki-api/journal; git checkout master; git remote add push git@github.com:ciniki/api-journal.git; cd ../../..
 cd site/ciniki-api/links; git checkout master; git remote add push git@github.com:ciniki/api-links.git; cd ../../..
 cd site/ciniki-api/media; git checkout master; git remote add push git@github.com:ciniki/api-media.git; cd ../../..
 cd site/ciniki-api/products; git checkout master; git remote add push git@github.com:ciniki/api-products.git; cd ../../..
 cd site/ciniki-api/projects; git checkout master; git remote add push git@github.com:ciniki/api-projects.git; cd ../../..
 cd site/ciniki-api/questions; git checkout master; git remote add push git@github.com:ciniki/api-questions.git; cd ../../..
-cd site/ciniki-api/scheduling; git checkout master; git remote add push git@github.com:ciniki/api-scheduling.git; cd ../../..
 cd site/ciniki-api/services; git checkout master; git remote add push git@github.com:ciniki/api-services.git; cd ../../..
 cd site/ciniki-api/subscriptions; git checkout master; git remote add push git@github.com:ciniki/api-subscriptions.git; cd ../../..
 cd site/ciniki-api/systemdocs; git checkout master; git remote add push git@github.com:ciniki/api-systemdocs.git; cd ../../..
-cd site/ciniki-api/timesheets; git checkout master; git remote add push git@github.com:ciniki/api-timesheets.git; cd ../../..
 cd site/ciniki-api/toolbox; git checkout master; git remote add push git@github.com:ciniki/api-toolbox.git; cd ../../..
 cd site/ciniki-api/users; git checkout master; git remote add push git@github.com:ciniki/api-users.git; cd ../../..
 cd site/ciniki-api/web; git checkout master; git remote add push git@github.com:ciniki/api-web.git; cd ../../..
 cd site/ciniki-api/wineproduction; git checkout master; git remote add push git@github.com:ciniki/api-wineproduction.git; cd ../../..
 
-cd site/ciniki-manage/alerts; git checkout master; git remote add push git@github.com:ciniki/manage-alerts.git; cd ../../..
 cd site/ciniki-manage/artcatalog; git checkout master; git remote add push git@github.com:ciniki/manage-artcatalog.git; cd ../../..
 cd site/ciniki-manage/atdo; git checkout master; git remote add push git@github.com:ciniki/manage-atdo.git; cd ../../..
 cd site/ciniki-manage/bugs; git checkout master; git remote add push git@github.com:ciniki/manage-bugs.git; cd ../../..
