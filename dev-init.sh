@@ -12,6 +12,7 @@ cd site/ciniki-api/customers; git checkout master; git remote add push git@githu
 cd site/ciniki-api/events; git checkout master; git remote add push git@github.com:ciniki/api-events.git; cd ../../..
 cd site/ciniki-api/exhibitions; git checkout master; git remote add push git@github.com:ciniki/api-exhibitions.git; cd ../../..
 cd site/ciniki-api/filedepot; git checkout master; git remote add push git@github.com:ciniki/api-filedepot.git; cd ../../..
+cd site/ciniki-api/gallery; git checkout master; git remote add push git@github.com:ciniki/api-gallery.git; cd ../../..
 cd site/ciniki-api/images; git checkout master; git remote add push git@github.com:ciniki/api-images.git; cd ../../..
 cd site/ciniki-api/journal; git checkout master; git remote add push git@github.com:ciniki/api-journal.git; cd ../../..
 cd site/ciniki-api/links; git checkout master; git remote add push git@github.com:ciniki/api-links.git; cd ../../..
@@ -38,6 +39,7 @@ cd site/ciniki-manage/customers; git checkout master; git remote add push git@gi
 cd site/ciniki-manage/events; git checkout master; git remote add push git@github.com:ciniki/manage-events.git; cd ../../..
 cd site/ciniki-manage/exhibitions; git checkout master; git remote add push git@github.com:ciniki/manage-exhibitions.git; cd ../../..
 cd site/ciniki-manage/filedepot; git checkout master; git remote add push git@github.com:ciniki/manage-filedepot.git; cd ../../..
+cd site/ciniki-manage/gallery; git checkout master; git remote add push git@github.com:ciniki/manage-gallery.git; cd ../../..
 cd site/ciniki-manage/help; git checkout master; git remote add push git@github.com:ciniki/manage-help.git; cd ../../..
 cd site/ciniki-manage/journal; git checkout master; git remote add push git@github.com:ciniki/manage-journal.git; cd ../../..
 cd site/ciniki-manage/links; git checkout master; git remote add push git@github.com:ciniki/manage-links.git; cd ../../..
