@@ -2,6 +2,7 @@
 
 cd site/ciniki-api/artcatalog; git checkout master; git remote add push git@github.com:ciniki/api-artcatalog.git; cd ../../..
 cd site/ciniki-api/artclub; git checkout master; git remote add push git@github.com:ciniki/api-artclub.git; cd ../../..
+cd site/ciniki-api/artgallery; git checkout master; git remote add push git@github.com:ciniki/api-artgallery.git; cd ../../..
 cd site/ciniki-api/atdo; git checkout master; git remote add push git@github.com:ciniki/api-atdo.git; cd ../../..
 cd site/ciniki-api/bugs; git checkout master; git remote add push git@github.com:ciniki/api-bugs.git; cd ../../..
 cd site/ciniki-api/businesses; git checkout master; git remote add push git@github.com:ciniki/api-businesses.git; cd ../../..
@@ -34,6 +35,7 @@ cd site/ciniki-api/wineproduction; git checkout master; git remote add push git@
 
 cd site/ciniki-manage/artcatalog; git checkout master; git remote add push git@github.com:ciniki/manage-artcatalog.git; cd ../../..
 cd site/ciniki-manage/artclub; git checkout master; git remote add push git@github.com:ciniki/manage-artclub.git; cd ../../..
+cd site/ciniki-manage/artgallery; git checkout master; git remote add push git@github.com:ciniki/manage-artgallery.git; cd ../../..
 cd site/ciniki-manage/atdo; git checkout master; git remote add push git@github.com:ciniki/manage-atdo.git; cd ../../..
 cd site/ciniki-manage/bugs; git checkout master; git remote add push git@github.com:ciniki/manage-bugs.git; cd ../../..
 cd site/ciniki-manage/businesses; git checkout master; git remote add push git@github.com:ciniki/manage-businesses.git; cd ../../..
