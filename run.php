@@ -31,6 +31,9 @@ if( isset($argv[1]) && $argv[1] != '' ) {
 
 $usage = "The following commands are valid: \n\n"
 	. "logs - list the last 15 log lines from $log and pick which one to run.\n"
+	. "last - rerun the last command\n"
+	. "lerr - update and get the highest error number\n"
+	. "derr - duplicate error codes\n"
 	. "help - print this message\n"
 	. "quit|exit - Exit script\n\n";
 
@@ -63,6 +66,14 @@ while( $line !== FALSE ) {
 	}
 	else if( $line == 'help' ) {
 		print $usage;
+	}
+	else if( $line == 'derr' ) {
+		run_api('ciniki.systemdocs.update', '&package=ciniki');
+		run_api('ciniki.systemdocs.toolsDupErrors', '&package=ciniki');
+	}
+	else if( $line == 'lerr' ) {
+		run_api('ciniki.systemdocs.update', '&package=ciniki');
+		run_api('ciniki.systemdocs.errors', '&package=ciniki&limit=1');
 	}
 	else if( $line == 'last' ) {
 		print $last_apicmd . "\n";
@@ -120,7 +131,7 @@ function login() {
 	$rest_args = "method=ciniki.users.auth&api_key=" . $GLOBALS['api_key'] ."&auth_token=&username=" . $GLOBALS['username'] . "&password=" . $GLOBALS['password'];
 	$login = `$php $api '$rest_args'`;
 	$last_login = time();
-	print_r($login);
+//	print_r($login);
 	if( preg_match('/auth token=\"([a-zA-Z0-9]*)\"/', $login, $matches) ) {
 		$GLOBALS['auth_token'] = $matches[1];
 //		print_r($GLOBALS['auth_token']);
@@ -149,5 +160,6 @@ function run_api($method, $args) {
 	$GLOBALS['last_apicmd'] = "$php $api '$rest_args'";
 	print `$php $api '$rest_args'`;
 }
+
 
 ?>
