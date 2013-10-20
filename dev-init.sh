@@ -73,3 +73,8 @@ cd site/ciniki-manage/web; git checkout master; git remote add push git@github.c
 
 cd site/ciniki-manage-themes/default; git checkout master; git remote add push git@github.com:ciniki/manage-theme-default.git; cd ../../..
 
+# 
+# Set the directory permissions
+#
+chmod a+w site/ciniki-api/images/cache
+chmod a+w site/ciniki-api/web/cache

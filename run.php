@@ -31,11 +31,14 @@ if( isset($argv[1]) && $argv[1] != '' ) {
 
 $usage = "The following commands are valid: \n\n"
 	. "logs - list the last 15 log lines from $log and pick which one to run.\n"
-	. "last - rerun the last command\n"
+	. "last - print the last api call\n"
+	. "login <user> <pass> - login with a different username/password\n"
 	. "lerr - update and get the highest error number\n"
 	. "derr - duplicate error codes\n"
 	. "help - print this message\n"
-	. "quit|exit - Exit script\n\n";
+	. "quit|exit - Exit script\n"
+	. "<enter> - re-run the last command\n"
+	. "\n";
 
 if( $line == '' ) {
 	check_logs();
@@ -74,6 +77,12 @@ while( $line !== FALSE ) {
 	else if( $line == 'lerr' ) {
 		run_api('ciniki.systemdocs.update', '&package=ciniki');
 		run_api('ciniki.systemdocs.errors', '&package=ciniki&limit=1');
+	}
+	else if( preg_match('/^login (.*) (.*)$/', $line, $matches) ) {
+		$username = $matches[1];
+		$password = $matches[2];
+//		run_api('ciniki.systemdocs.update', '&package=ciniki');
+//		run_api('ciniki.systemdocs.errors', '&package=ciniki&limit=1');
 	}
 	else if( $line == 'last' ) {
 		print $last_apicmd . "\n";
