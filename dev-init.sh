@@ -17,10 +17,8 @@ cd site/ciniki-api/exhibitions; git checkout master; git remote add push git@git
 cd site/ciniki-api/filedepot; git checkout master; git remote add push git@github.com:ciniki/api-filedepot.git; cd ../../..
 cd site/ciniki-api/gallery; git checkout master; git remote add push git@github.com:ciniki/api-gallery.git; cd ../../..
 cd site/ciniki-api/images; git checkout master; git remote add push git@github.com:ciniki/api-images.git; cd ../../..
-cd site/ciniki-api/journal; git checkout master; git remote add push git@github.com:ciniki/api-journal.git; cd ../../..
 cd site/ciniki-api/links; git checkout master; git remote add push git@github.com:ciniki/api-links.git; cd ../../..
 cd site/ciniki-api/mail; git checkout master; git remote add push git@github.com:ciniki/api-mail.git; cd ../../..
-cd site/ciniki-api/media; git checkout master; git remote add push git@github.com:ciniki/api-media.git; cd ../../..
 cd site/ciniki-api/newsaggregator; git checkout master; git remote add push git@github.com:ciniki/api-newsaggregator.git; cd ../../..
 cd site/ciniki-api/newsletters; git checkout master; git remote add push git@github.com:ciniki/api-newsletters.git; cd ../../..
 cd site/ciniki-api/products; git checkout master; git remote add push git@github.com:ciniki/api-products.git; cd ../../..
@@ -51,10 +49,8 @@ cd site/ciniki-manage/exhibitions; git checkout master; git remote add push git@
 cd site/ciniki-manage/filedepot; git checkout master; git remote add push git@github.com:ciniki/manage-filedepot.git; cd ../../..
 cd site/ciniki-manage/gallery; git checkout master; git remote add push git@github.com:ciniki/manage-gallery.git; cd ../../..
 cd site/ciniki-manage/help; git checkout master; git remote add push git@github.com:ciniki/manage-help.git; cd ../../..
-cd site/ciniki-manage/journal; git checkout master; git remote add push git@github.com:ciniki/manage-journal.git; cd ../../..
 cd site/ciniki-manage/links; git checkout master; git remote add push git@github.com:ciniki/manage-links.git; cd ../../..
 cd site/ciniki-manage/mail; git checkout master; git remote add push git@github.com:ciniki/manage-mail.git; cd ../../..
-cd site/ciniki-manage/media; git checkout master; git remote add push git@github.com:ciniki/manage-media.git; cd ../../..
 cd site/ciniki-manage/newsaggregator; git checkout master; git remote add push git@github.com:ciniki/manage-newsaggregator.git; cd ../../..
 cd site/ciniki-manage/newsletters; git checkout master; git remote add push git@github.com:ciniki/manage-newsletters.git; cd ../../..
 cd site/ciniki-manage/monitoring; git checkout master; git remote add push git@github.com:ciniki/manage-monitoring.git; cd ../../..
