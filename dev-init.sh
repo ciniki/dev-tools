@@ -29,6 +29,7 @@ cd site/ciniki-api/services; git checkout master; git remote add push git@github
 cd site/ciniki-api/subscriptions; git checkout master; git remote add push git@github.com:ciniki/api-subscriptions.git; cd ../../..
 cd site/ciniki-api/surveys; git checkout master; git remote add push git@github.com:ciniki/api-surveys.git; cd ../../..
 cd site/ciniki-api/systemdocs; git checkout master; git remote add push git@github.com:ciniki/api-systemdocs.git; cd ../../..
+cd site/ciniki-api/taxes; git checkout master; git remote add push git@github.com:ciniki/api-taxes.git; cd ../../..
 cd site/ciniki-api/toolbox; git checkout master; git remote add push git@github.com:ciniki/api-toolbox.git; cd ../../..
 cd site/ciniki-api/users; git checkout master; git remote add push git@github.com:ciniki/api-users.git; cd ../../..
 cd site/ciniki-api/web; git checkout master; git remote add push git@github.com:ciniki/api-web.git; cd ../../..
@@ -64,6 +65,7 @@ cd site/ciniki-manage/subscriptions; git checkout master; git remote add push gi
 cd site/ciniki-manage/surveys; git checkout master; git remote add push git@github.com:ciniki/manage-surveys.git; cd ../../..
 cd site/ciniki-manage/sysadmin; git checkout master; git remote add push git@github.com:ciniki/manage-sysadmin.git; cd ../../..
 cd site/ciniki-manage/systemdocs; git checkout master; git remote add push git@github.com:ciniki/manage-systemdocs.git; cd ../../..
+cd site/ciniki-manage/taxes; git checkout master; git remote add push git@github.com:ciniki/manage-taxes.git; cd ../../..
 cd site/ciniki-manage/toolbox; git checkout master; git remote add push git@github.com:ciniki/manage-toolbox.git; cd ../../..
 cd site/ciniki-manage/users; git checkout master; git remote add push git@github.com:ciniki/manage-users.git; cd ../../..
 cd site/ciniki-manage/wineproduction; git checkout master; git remote add push git@github.com:ciniki/manage-wineproduction.git; cd ../../..
