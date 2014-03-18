@@ -18,6 +18,7 @@ cd site/ciniki-mods/exhibitions; git checkout master; git remote add push git@gi
 cd site/ciniki-mods/filedepot; git checkout master; git remote add push git@github.com:ciniki/filedepot.git; cd ../../..
 cd site/ciniki-mods/gallery; git checkout master; git remote add push git@github.com:ciniki/gallery.git; cd ../../..
 cd site/ciniki-mods/images; git checkout master; git remote add push git@github.com:ciniki/images.git; cd ../../..
+cd site/ciniki-mods/info; git checkout master; git remote add push git@github.com:ciniki/info.git; cd ../../..
 cd site/ciniki-mods/links; git checkout master; git remote add push git@github.com:ciniki/links.git; cd ../../..
 cd site/ciniki-mods/mail; git checkout master; git remote add push git@github.com:ciniki/mail.git; cd ../../..
 cd site/ciniki-mods/newsaggregator; git checkout master; git remote add push git@github.com:ciniki/newsaggregator.git; cd ../../..
