@@ -36,6 +36,7 @@ cd site/ciniki-mods/sysadmin; git checkout master; git remote add push git@githu
 cd site/ciniki-mods/systemdocs; git checkout master; git remote add push git@github.com:ciniki/systemdocs.git; cd ../../..
 cd site/ciniki-mods/taxes; git checkout master; git remote add push git@github.com:ciniki/taxes.git; cd ../../..
 cd site/ciniki-mods/toolbox; git checkout master; git remote add push git@github.com:ciniki/toolbox.git; cd ../../..
+cd site/ciniki-mods/tutorials; git checkout master; git remote add push git@github.com:ciniki/tutorials.git; cd ../../..
 cd site/ciniki-mods/users; git checkout master; git remote add push git@github.com:ciniki/users.git; cd ../../..
 cd site/ciniki-mods/web; git checkout master; git remote add push git@github.com:ciniki/web.git; cd ../../..
 cd site/ciniki-mods/wineproduction; git checkout master; git remote add push git@github.com:ciniki/wineproduction.git; cd ../../..
