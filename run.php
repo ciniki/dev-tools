@@ -155,6 +155,8 @@ function run_api($method, $args) {
 
 	$php = $GLOBALS['php'];	
 	$api = $GLOBALS['api'];	
+	$config = $GLOBALS['config'];	
+
 	// Check if login has expired
 	if( $GLOBALS['auth_token'] = '' || $GLOBALS['last_login'] < (time() - 1800) ) {
 		login();
@@ -171,8 +173,12 @@ function run_api($method, $args) {
 //	print_r("$php $api '$rest_args'\n");
 	$GLOBALS['last_apicmd'] = "$php $api '$rest_args'";
 	$rc = `$php $api '$rest_args'`;
-    print_r(json_decode($rc, true)) . "\n";
-    print json_encode(json_decode($rc, true), JSON_PRETTY_PRINT) . "\n";
+    if( isset($config['output']) && strstr($config['output'], 'print_r') ) {
+        print_r(json_decode($rc, true)) . "\n";
+    }
+    if( !isset($config['output']) || strstr($config['output'], 'json') ) {
+        print json_encode(json_decode($rc, true), JSON_PRETTY_PRINT) . "\n";
+    }
 }
 
 

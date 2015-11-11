@@ -10,4 +10,6 @@ api_key = ''					; The API key generated for ciniki-manage
 username = 'username'	
 password = 'password'
 prompt = "api> "
+output = "json"                      ; Output the result as json pretty printed with spaces and indents
+;output = "print_r,json"             ; Output the result as both hash array dump and json pretty print
 log = "/var/log/apache2/access_log"
