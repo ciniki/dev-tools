@@ -138,6 +138,7 @@ function login() {
 	$php = $GLOBALS['php'];
 	$api = $GLOBALS['api'];
 	$rest_args = "method=ciniki.users.auth&api_key=" . $GLOBALS['api_key'] ."&auth_token=&username=" . $GLOBALS['username'] . "&password=" . $GLOBALS['password'];
+//    print "$php $api '$rest_args'\n";
 	$login = `$php $api '$rest_args'`;
 	$last_login = time();
 //	print_r($login);
@@ -163,11 +164,15 @@ function run_api($method, $args) {
 		return;
 	}
 
+    $args = preg_replace('/ HTTP.*/', '', $args);
+
 	$rest_args = "method=$method&api_key=" . $GLOBALS['api_key'] . "&auth_token=" . $GLOBALS['auth_token'] . $args;
 
 //	print_r("$php $api '$rest_args'\n");
 	$GLOBALS['last_apicmd'] = "$php $api '$rest_args'";
-	print `$php $api '$rest_args'`;
+	$rc = `$php $api '$rest_args'`;
+    print_r(json_decode($rc, true)) . "\n";
+    print json_encode(json_decode($rc, true), JSON_PRETTY_PRINT) . "\n";
 }
 
 

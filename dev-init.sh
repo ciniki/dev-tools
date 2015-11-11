@@ -7,6 +7,7 @@ cd site/ciniki-mods/blog; git checkout master; git remote add push git@github.co
 cd site/ciniki-mods/bugs; git checkout master; git remote add push git@github.com:ciniki/bugs.git; cd ../../..
 cd site/ciniki-mods/businesses; git checkout master; git remote add push git@github.com:ciniki/businesses.git; cd ../../..
 cd site/ciniki-mods/calendars; git checkout master; git remote add push git@github.com:ciniki/calendars.git; cd ../../..
+cd site/ciniki-mods/classes; git checkout master; git remote add push git@github.com:ciniki/classes.git; cd ../../..
 cd site/ciniki-mods/clicktracker; git checkout master; git remote add push git@github.com:ciniki/clicktracker.git; cd ../../..
 cd site/ciniki-mods/core; git checkout master; git remote add push git@github.com:ciniki/core.git; cd ../../..
 cd site/ciniki-mods/courses; git checkout master; git remote add push git@github.com:ciniki/courses.git; cd ../../..
@@ -19,6 +20,7 @@ cd site/ciniki-mods/filedepot; git checkout master; git remote add push git@gith
 cd site/ciniki-mods/gallery; git checkout master; git remote add push git@github.com:ciniki/gallery.git; cd ../../..
 cd site/ciniki-mods/images; git checkout master; git remote add push git@github.com:ciniki/images.git; cd ../../..
 cd site/ciniki-mods/info; git checkout master; git remote add push git@github.com:ciniki/info.git; cd ../../..
+cd site/ciniki-mods/library; git checkout master; git remote add push git@github.com:ciniki/library.git; cd ../../..
 cd site/ciniki-mods/links; git checkout master; git remote add push git@github.com:ciniki/links.git; cd ../../..
 cd site/ciniki-mods/mail; git checkout master; git remote add push git@github.com:ciniki/mail.git; cd ../../..
 cd site/ciniki-mods/marketing; git checkout master; git remote add push git@github.com:ciniki/marketing.git; cd ../../..
