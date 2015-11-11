@@ -174,14 +174,17 @@ function run_api($method, $args) {
 	$GLOBALS['last_apicmd'] = "$php $api '$rest_args'";
 	$rc = `$php $api '$rest_args'`;
     $json = json_decode($rc, true);
-    if( $json === FALSE ) {
+    if( $json == NULL ) {
         print_r($rc);
+        print "\n";
     } else {
         if( isset($config['output']) && strstr($config['output'], 'print_r') ) {
-            print_r(json_decode($rc, true)) . "\n";
+            print_r($json);
+            print "\n";
         }
         if( !isset($config['output']) || strstr($config['output'], 'json') ) {
-            print json_encode(json_decode($rc, true), JSON_PRETTY_PRINT) . "\n";
+            print json_encode($json, JSON_PRETTY_PRINT);
+            print "\n";
         }
     }
 }
