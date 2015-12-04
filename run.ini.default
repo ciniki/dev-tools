@@ -4,7 +4,7 @@
 ;
 ; This system should really only be used for development purposes.
 ;
-php = /usr/bin/php
+php = /opt/local/bin/php56
 api = '/ciniki/dev/site/ciniki-rest.php'
 api_key = ''					; The API key generated for ciniki-manage
 username = 'username'	
