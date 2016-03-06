@@ -63,6 +63,7 @@ function generate_add() {
     global $object;
     global $object_id;
     global $object_def;
+    global $cur_code;
 
     $file = ""
         . "<?php\n"
@@ -90,7 +91,7 @@ function generate_add() {
         . "        'business_id'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'Business'),\n"
         . "";
     foreach($object_def['fields'] as $field_id => $field) {
-        $file .= "        '$field_id'=>array('required'=>'" . (isset($field['default'])?'no':'yes') . "', 'blank'=>'no', 'name'=>'{$field['name']}'),\n";
+        $file .= "        '$field_id'=>array('required'=>'" . (isset($field['default'])?'no':'yes') . "', 'blank'=>'" . (isset($field['default'])?'yes':'no') . "', 'name'=>'{$field['name']}'),\n";
     }
 	$file .= ""
         . "        ));\n"
@@ -107,8 +108,34 @@ function generate_add() {
         . "    if( \$rc['stat'] != 'ok' ) {\n"
         . "        return \$rc;\n"
         . "    }\n"
-        . "\n"
-        . "    //\n"
+        . "\n";
+    if( isset($object_def['fields']['permalink']) ) {
+        $file .= "    //\n"
+            . "    // Setup permalink\n"
+            . "    //\n"
+            . "    if( !isset(\$args['permalink']) || \$args['permalink'] == '' ) {\n"
+            . "        ciniki_core_loadMethod(\$ciniki, 'ciniki', 'core', 'private', 'makePermalink');\n"
+            . "        \$args['permalink'] = ciniki_core_makePermalink(\$ciniki, \$args['name']);\n"
+            . "    }\n"
+            . "\n"
+            . "    //\n"
+            . "    // Make sure the permalink is unique\n"
+            . "    //\n"
+            . "    \$strsql = \"SELECT id, name, permalink \"\n"
+            . "        . \"FROM {$object_def['table']} \"\n"
+            . "        . \"WHERE business_id = '\" . ciniki_core_dbQuote(\$ciniki, \$args['business_id']) . \"' \"\n"
+            . "        . \"AND permalink = '\" . ciniki_core_dbQuote(\$ciniki, \$args['permalink']) . \"' \"\n"
+            . "        . \"\";\n"
+            . "    \$rc = ciniki_core_dbHashQuery(\$ciniki, \$strsql, '{$package}.{$module}', 'item');\n"
+            . "    if( \$rc['stat'] != 'ok' ) {\n"
+            . "        return \$rc;\n"
+            . "    }\n"
+            . "    if( \$rc['num_rows'] > 0 ) {\n"
+            . "        return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'" . $cur_code++ . "', 'msg'=>'You already have a " . strtolower($object_def['name']) . " with that name, please choose another.'));\n"
+            . "    }\n"
+            . "\n";
+    }
+    $file .= "    //\n"
         . "    // Start transaction\n"
         . "    //\n"
         . "    ciniki_core_loadMethod(\$ciniki, 'ciniki', 'core', 'private', 'dbTransactionStart');\n"
@@ -166,6 +193,7 @@ function generate_delete() {
     global $object;
     global $object_id;
     global $object_def;
+    global $cur_code;
 
     $file = ""
         . "<?php\n"
@@ -221,7 +249,7 @@ function generate_delete() {
         . "        return \$rc;\n"
         . "    }\n"
         . "    if( !isset(\$rc['{$object_def['o_name']}']) ) {\n"
-        . "        return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'2701', 'msg'=>'Airlock does not exist.'));\n"
+        . "        return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'" . $cur_code++ . "', 'msg'=>'Airlock does not exist.'));\n"
         . "    }\n"
         . "    \${$object_def['o_name']} = \$rc['{$object_def['o_name']}'];\n"
         . "\n"
@@ -349,10 +377,10 @@ function generate_get() {
         . "        \${$object_def['o_name']} = array('id'=>0,\n"
         . "";
     foreach($object_def['fields'] as $field_id => $field) {
-        $file .= "        '$field_id'=>'" . (isset($field['default'])?$field['default']:'') . "',\n";
+        $file .= "            '$field_id'=>'" . (isset($field['default'])?$field['default']:'') . "',\n";
     }
 	$file .= ""
-        . "            );\n"
+        . "        );\n"
         . "    }\n"
         . "\n"
         . "    //\n"
@@ -363,7 +391,7 @@ function generate_get() {
         . "";
     foreach($object_def['fields'] as $field_id => $field) {
         $file .= ", \"\n"
-            . "        . \"{$object_def['table']}.$field_id, \"\n";
+            . "            . \"{$object_def['table']}.$field_id";
     }
 	$file .= " \"\n"
         . "            . \"FROM {$object_def['table']} \"\n"
@@ -505,7 +533,7 @@ function generate_list() {
 		. "    // Check access to business_id as owner, or sys admin.\n"
 		. "    //\n"
 		. "    ciniki_core_loadMethod(\$ciniki, '{$package}', '{$module}', 'private', 'checkAccess');\n"
-		. "    \$rc = {$package}_{$module}_checkAccess(\$ciniki, \$args['business_id'], '{$package}.{$module}.{$object}');\n"
+		. "    \$rc = {$package}_{$module}_checkAccess(\$ciniki, \$args['business_id'], '{$package}.{$module}.{$object}List');\n"
 		. "    if( \$rc['stat'] != 'ok' ) {\n"
 		. "        return \$rc;\n"
 		. "    }\n"
@@ -517,7 +545,7 @@ function generate_list() {
         . "";
     foreach($object_def['fields'] as $field_id => $field) {
         $file .= ", \"\n"
-            . "        . \"{$object_def['table']}.$field_id, \"\n";
+            . "        . \"{$object_def['table']}.$field_id";
     }
 	$file .= " \"\n"
         . "        . \"FROM {$object_def['table']} \"\n"
@@ -537,7 +565,7 @@ function generate_list() {
 		. "    if( \$rc['stat'] != 'ok' ) {\n"
 		. "        return \$rc;\n"
 		. "    }\n"
-		. "    if( !isset(\$rc['{$object_def['o_container']}']) ) {\n"
+		. "    if( isset(\$rc['{$object_def['o_container']}']) ) {\n"
 		. "        \${$object_def['o_container']} = \$rc['{$object_def['o_container']}'];\n"
 		. "    } else {\n"
 		. "        \${$object_def['o_container']} = array();\n"
@@ -563,6 +591,7 @@ function generate_update() {
     global $object;
     global $object_id;
     global $object_def;
+    global $cur_code;
 
     $file = ""
 		. "<?php\n"
@@ -587,7 +616,7 @@ function generate_update() {
 		. "        '{$object_id}'=>array('required'=>'yes', 'blank'=>'no', 'name'=>'{$object_def['name']}'),\n"
         . "";
     foreach($object_def['fields'] as $field_id => $field) {
-        $file .= "        '$field_id'=>array('required'=>'no', 'blank'=>'no', 'name'=>'{$field['name']}'),\n";
+        $file .= "        '$field_id'=>array('required'=>'no', 'blank'=>'" . (isset($field['default'])?'yes':'no') . "', 'name'=>'{$field['name']}'),\n";
     }
 	$file .= ""
 		. "        ));\n"
@@ -605,8 +634,56 @@ function generate_update() {
 		. "    if( \$rc['stat'] != 'ok' ) {\n"
 		. "        return \$rc;\n"
 		. "    }\n"
-		. "\n"
-		. "    //\n"
+		. "\n";
+    if( isset($object_def['fields']['permalink']) && isset($object_def['fields']['name']) ) {
+        $file .= ""
+	        . "if( isset(\$args['name']) ) {\n"
+		    . "    ciniki_core_loadMethod(\$ciniki, 'ciniki', 'core', 'private', 'makePermalink');\n"
+		    . "    \$args['permalink'] = ciniki_core_makePermalink(\$ciniki, \$args['name']);\n"
+		    . "    //\n"
+		    . "    // Make sure the permalink is unique\n"
+		    . "    //\n"
+		    . "    \$strsql = \"SELECT id, name, permalink \"\n"
+            . "        . \"FROM {$object_def['table']} \"\n"
+			. "        . \"WHERE business_id = '\" . ciniki_core_dbQuote(\$ciniki, \$args['business_id']) . \"' \"\n"
+			. "        . \"AND permalink = '\" . ciniki_core_dbQuote(\$ciniki, \$args['permalink']) . \"' \"\n"
+			. "        . \"AND id <> '\" . ciniki_core_dbQuote(\$ciniki, \$args['{$object_id}']) . \"' \"\n"
+			. "        . \"\";\n"
+		    . "    \$rc = ciniki_core_dbHashQuery(\$ciniki, \$strsql, '{$package}.{$module}', 'item');\n"
+		    . "    if( \$rc['stat'] != 'ok' ) {\n"
+			. "        return \$rc;\n"
+		    . "    }\n"
+		    . "    if( \$rc['num_rows'] > 0 ) {\n"
+			. "        return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'" . $cur_code++ . "', 'msg'=>'You already have an " . strtolower($object_def['name']) . " with this name, please choose another.'));\n"
+		    . "    }\n"
+	        . "}\n"
+            . "\n";
+    }
+    if( isset($object_def['fields']['permalink']) && isset($object_def['fields']['title']) ) {
+        $file .= ""
+	        . "if( isset(\$args['title']) ) {\n"
+		    . "    ciniki_core_loadMethod(\$ciniki, 'ciniki', 'core', 'private', 'makePermalink');\n"
+		    . "    \$args['permalink'] = ciniki_core_makePermalink(\$ciniki, \$args['title']);\n"
+		    . "    //\n"
+		    . "    // Make sure the permalink is unique\n"
+		    . "    //\n"
+		    . "    $strsql = \"SELECT id, title, permalink \"\n"
+            . "        . \"FROM {$object_def['table']} \"\n"
+			. "        . \"WHERE business_id = '\" . ciniki_core_dbQuote(\$ciniki, \$args['business_id']) . \"' \"\n"
+			. "        . \"AND permalink = '\" . ciniki_core_dbQuote(\$ciniki, \$args['permalink']) . \"' \"\n"
+			. "        . \"AND id <> '\" . ciniki_core_dbQuote(\$ciniki, \$args['{$object_id}']) . \"' \"\n"
+			. "        . \"\";\n"
+		    . "    \$rc = ciniki_core_dbHashQuery(\$ciniki, \$strsql, '{$package}.{$module}', 'item');\n"
+		    . "    if( \$rc['stat'] != 'ok' ) {\n"
+			. "        return \$rc;\n"
+		    . "    }\n"
+		    . "    if( \$rc['num_rows'] > 0 ) {\n"
+			. "        return array('stat'=>'fail', 'err'=>array('pkg'=>'ciniki', 'code'=>'" . $cur_code++ . "', 'msg'=>'You already have an " . strtolower($object_def['name']) . " with this title, please choose another.'));\n"
+		    . "    }\n"
+	        . "}\n"
+            . "\n";
+    }
+	$file .= "    //\n"
 		. "    // Start transaction\n"
 		. "    //\n"
 		. "    ciniki_core_loadMethod(\$ciniki, 'ciniki', 'core', 'private', 'dbTransactionStart');\n"

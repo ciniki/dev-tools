@@ -244,7 +244,7 @@ function generate_checkAccess() {
         . "        . \"AND user_id = '\" . ciniki_core_dbQuote(\$ciniki, \$ciniki['session']['user']['id']) . \"' \"\n"
         . "        . \"AND package = '$package' \"\n"
         . "        . \"AND status = 10 \"\n"
-        . "        . \"AND (permission_group = 'owners' OR permission_group = 'employees') \"\n"
+        . "        . \"AND (permission_group = 'owners' OR permission_group = 'employees' OR permission_group = 'resellers') \"\n"
         . "        . \"\";\n"
         . "    ciniki_core_loadMethod(\$ciniki, 'ciniki', 'core', 'private', 'dbHashQuery');\n"
         . "    \$rc = ciniki_core_dbHashQuery(\$ciniki, \$strsql, 'ciniki.businesses', 'user');\n"
