@@ -7,15 +7,45 @@
 // This script will create the files required for a new module.
 //
 //
-if( !isset($argv[1]) || !isset($argv[2]) || !isset($argv[3]) || !isset($argv[4]) ) {
+$package = 'ciniki';
+$module = basename(getcwd());
+$cur_code = 1;
+
+$i = 1;
+while( isset($argv[$i]) && $argv[$i][0] == '-' ) {
+    if( $argv[$i] == '-p' ) {
+        if( !isset($argv[$i+1]) ) {
+            usage();
+            exit;
+        }
+        $package = $argv[$i+1];
+        $i++;
+    }
+    elseif( $argv[$i] == '-m' ) {
+        if( !isset($argv[$i+1]) ) {
+            usage();
+            exit;
+        }
+        $module = $argv[$i+1];
+        $i++;
+    }
+    elseif( $argv[$i] == '-c' ) {
+        if( !isset($argv[$i+1]) ) {
+            usage();
+            exit;
+        }
+        $cur_code = $argv[$i+1];
+        $i++;
+    }
+    $i++;
+}
+
+if( !isset($argv[1]) ) {
     usage();
     exit;
 }
 
-$package = $argv[1];
-$module = $argv[2];
-$title = $argv[3];
-$cur_code = $argv[4];
+$title = $argv[$i];
 
 print "\n";
 
@@ -30,6 +60,11 @@ generate_license();
 generate_info();
 generate_db_history();
 generate_checkAccess();
+generate_objects();
+generate_maps();
+generate_flags();
+generate_uisettings();
+//generate_ui();
 
 print "done\n";
 
@@ -39,7 +74,11 @@ exit;
 // Print the usage of the script
 //
 function usage() {
-    print "mod_init.php <package> <module> <title> <error_code>\n\n";
+    print "mod_init.php [-p <package>] [-m <module>] [-c <error code>] <title> \n\n"
+        . "    -p <package>  - The package if not ciniki\n"
+        . "    -m <module>   - The package if not same as directory name\n"
+        . "    -c <code>     - The error code to start errors at, otherwise looks for maximum in module\n"
+        . "\n";
 }
 
 //
@@ -201,7 +240,7 @@ function generate_checkAccess() {
         . "//\n"
         . "// Description\n"
         . "// -----------\n"
-        . "// This function will check if the user has access to the landingpages module.\n"
+        . "// This function will check if the user has access to the module.\n"
         . "//\n"
         . "// Arguments\n"
         . "// ---------\n"
@@ -225,7 +264,7 @@ function generate_checkAccess() {
         . "    \$modules = \$rc['modules'];\n"
         . "\n"
         . "    if( !isset(\$rc['ruleset']) ) {\n"
-        . "        return array('stat'=>'fail', 'err'=>array('pkg'=>'$package', 'code'=>'" . $cur_code++ . "', 'msg'=>'No permissions granted'));\n"
+        . "        return array('stat'=>'fail', 'err'=>array('code'=>'{$package}.{$module}." . $cur_code++ . "', 'msg'=>'No permissions granted'));\n"
         . "    }\n"
         . "\n"
         . "    //\n"
@@ -249,7 +288,7 @@ function generate_checkAccess() {
         . "    ciniki_core_loadMethod(\$ciniki, 'ciniki', 'core', 'private', 'dbHashQuery');\n"
         . "    \$rc = ciniki_core_dbHashQuery(\$ciniki, \$strsql, 'ciniki.businesses', 'user');\n"
         . "    if( \$rc['stat'] != 'ok' ) {\n"
-        . "        return array('stat'=>'fail', 'err'=>array('pkg'=>'$package', 'code'=>'" . $cur_code++ . "', 'msg'=>'Access denied.'));\n"
+        . "        return array('stat'=>'fail', 'err'=>array('code'=>'{$package}.{$module}." . $cur_code++ . "', 'msg'=>'Access denied.'));\n"
         . "    }\n"
         . "    //\n"
         . "    // If the user has permission, return ok\n"
@@ -257,15 +296,15 @@ function generate_checkAccess() {
         . "    if( isset(\$rc['rows']) && isset(\$rc['rows'][0])\n"
         . "        && \$rc['rows'][0]['user_id'] > 0 && \$rc['rows'][0]['user_id'] == \$ciniki['session']['user']['id'] ) {\n"
         . "        return array('stat'=>'ok', 'modules'=>\$modules);\n"
-        . "    }\n"
+        . "    }\n" 
         . "\n"
         . "    //\n"
         . "    // By default fail\n"
         . "    //\n"
-        . "    return array('stat'=>'fail', 'err'=>array('pkg'=>'$package', 'code'=>'" . $cur_code++ . "', 'msg'=>'Access denied'));\n"
+        . "    return array('stat'=>'fail', 'err'=>array('code'=>'{$package}.{$module}." . $cur_code++ . "', 'msg'=>'Access denied'));\n"
         . "}\n"
         . "?>\n"
-        . "";
+        . ""; 
     if( !file_exists('private/checkAccess.php') ) {
         file_put_contents('private/checkAccess.php', $file);
     }
@@ -274,5 +313,229 @@ function generate_checkAccess() {
 //
 // objects.php
 //
+function generate_objects() {
+    global $package;
+    global $module;
+
+    $file = ""
+        . "<?php\n"
+        . "//\n"
+        . "// Description\n"
+        . "// -----------\n"
+        . "// This function returns the list of objects for the module.\n"
+        . "//\n"
+        . "// Arguments\n"
+        . "// ---------\n"
+        . "//\n"
+        . "// Returns\n"
+        . "// -------\n"
+        . "//\n"
+        . "function {$package}_{$module}_objects(&\$ciniki) {\n"
+        . "    //\n"
+        . "    // Build the objects\n"
+        . "    //\n"
+        . "    \$objects = array();\n"
+        . "    //\n"
+        . "    return array('stat'=>'ok', 'objects'=>\$objects);\n"
+        . "}\n"
+        . "?>\n"
+        . "";
+    if( !file_exists('private/objects.php') ) {
+        file_put_contents('private/objects.php', $file);
+    }
+}
+
+//
+// maps.php
+//
+function generate_maps() {
+    global $package;
+    global $module;
+
+    $file = ""
+        . "<?php\n"
+        . "//\n"
+        . "// Description\n"
+        . "// -----------\n"
+        . "// This function returns the int to text mappings for the module.\n"
+        . "//\n"
+        . "// Arguments\n"
+        . "// ---------\n"
+        . "//\n"
+        . "// Returns\n"
+        . "// -------\n"
+        . "//\n"
+        . "function {$package}_{$module}_maps(&\$ciniki) {\n"
+        . "    //\n"
+        . "    // Build the maps object\n"
+        . "    //\n"
+        . "    \$maps = array();\n"
+        . "    \$maps['object'] = array('field'=>array(\n"
+        . "        'int'=>'text',\n"
+        . "    ));\n"
+        . "    //\n"
+        . "    return array('stat'=>'ok', 'maps'=>\$maps);\n"
+        . "}\n"
+        . "?>\n"
+        . "";
+    if( !file_exists('private/maps.php') ) {
+        file_put_contents('private/maps.php', $file);
+    }
+}
+
+//
+// flags.php
+//
+function generate_flags() {
+    global $package;
+    global $module;
+
+    $file = ""
+        . "<?php\n"
+        . "//\n"
+        . "// Description\n"
+        . "// -----------\n"
+        . "// The module flags\n"
+        . "//\n"
+        . "// Arguments\n"
+        . "// ---------\n"
+        . "//\n"
+        . "// Returns\n"
+        . "// -------\n"
+        . "//\n"
+        . "function {$package}_{$module}_flags(&\$ciniki) {\n"
+        . "    //\n"
+        . "    // The flags for the object\n"
+        . "    //\n"
+        . "    \$flags = array(\n"
+        . "        // 0x01\n"
+        . "//        array('flag'=>array('bit'=>'1', 'name'=>'')),\n"
+        . "//        array('flag'=>array('bit'=>'2', 'name'=>'')),\n"
+        . "//        array('flag'=>array('bit'=>'3', 'name'=>'')),\n"
+        . "//        array('flag'=>array('bit'=>'4', 'name'=>'')),\n"
+        . "        // 0x10\n"
+        . "//        array('flag'=>array('bit'=>'5', 'name'=>'')),\n"
+        . "//        array('flag'=>array('bit'=>'6', 'name'=>'')),\n"
+        . "//        array('flag'=>array('bit'=>'7', 'name'=>'')),\n"
+        . "//        array('flag'=>array('bit'=>'8', 'name'=>'')),\n"
+        . "        // 0x0100\n"
+        . "//        array('flag'=>array('bit'=>'9', 'name'=>'')),\n"
+        . "//        array('flag'=>array('bit'=>'10', 'name'=>'')),\n"
+        . "//        array('flag'=>array('bit'=>'11', 'name'=>'')),\n"
+        . "//        array('flag'=>array('bit'=>'12', 'name'=>'')),\n"
+        . "        // 0x1000\n"
+        . "//        array('flag'=>array('bit'=>'13', 'name'=>'')),\n"
+        . "//        array('flag'=>array('bit'=>'14', 'name'=>'')),\n"
+        . "//        array('flag'=>array('bit'=>'15', 'name'=>'')),\n"
+        . "//        array('flag'=>array('bit'=>'16', 'name'=>'')),\n"
+        . "        );\n"
+        . "    //\n"
+        . "    return array('stat'=>'ok', 'flags'=>\$flags);\n"
+        . "}\n"
+        . "?>\n"
+        . "";
+    if( !file_exists('private/flags.php') ) {
+        file_put_contents('private/flags.php', $file);
+    }
+}
+
+//
+// ui/main.js 
+//
+function generate_ui() {
+    global $package;
+    global $module;
+    global $title;
+
+    $file = ""
+        . "//\n"
+        . "// This is the main app for the $title module\n"
+        . "//\n"
+        . "function {$package}_{$module}_main() {\n"
+        . "    //\n"
+        . "    // Start the app\n"
+        . "    // cb - The callback to run when the user leaves the main panel in the app.\n"
+        . "    // ap - The application prefix.\n"
+        . "    // ag - The app arguments.\n"
+        . "    //\n"
+        . "    this.start = function(cb, ap, ag) {\n"
+        . "        args = {};\n"
+        . "        if( ag != null ) {\n"
+        . "            args = eval(ag);\n"
+        . "        }\n"
+        . "        \n"
+        . "        //\n"
+        . "        // Create the app container\n"
+        . "        //\n"
+        . "        var ac = M.createContainer(ap, '{$package}_{$module}_main', 'yes');\n"
+        . "        if( ac == null ) {\n"
+        . "            alert('App Error');\n"
+        . "            return false;\n"
+        . "        }\n"
+        . "        \n"
+        . "        this.menu.open(cb);\n"
+        . "    }\n"
+        . "}";
+    if( !file_exists('ui/main.js') ) {
+        file_put_contents('ui/main.js', $file);
+    }
+}
+
+//
+// Generate the hooks/uiSettings.php
+//
+function generate_uisettings() {
+    global $package;
+    global $module;
+    global $title;
+
+    $file = ""
+        . "<?php\n"
+        . "//\n"
+        . "// Description\n"
+        . "// -----------\n"
+        . "// This function returns the settings for the module and the main menu items and settings menu items\n"
+        . "//\n"
+        . "// Arguments\n"
+        . "// ---------\n"
+        . "// ciniki:\n"
+        . "// business_id:\n"
+        . "// args: The arguments for the hook\n"
+        . "//\n"
+        . "// Returns\n"
+        . "// -------\n"
+        . "//\n"
+        . "function {$package}_{$module}_hooks_uiSettings(&\$ciniki, \$business_id, \$args) {\n"
+        . "    //\n"
+        . "    // Setup the default response\n"
+        . "    //\n"
+        . "    \$rsp = array('stat'=>'ok', 'menu_items'=>array(), 'settings_menu_items'=>array());\n"
+        . "\n"
+        . "    //\n"
+        . "    // Check permissions for what menu items should be available\n"
+        . "    //\n"
+        . "    if( isset(\$ciniki['business']['modules']['{$package}.{$module}'])\n"
+        . "        && (isset(\$args['permissions']['owners'])\n"
+        . "            || isset(\$args['permissions']['employees'])\n"
+        . "            || isset(\$args['permissions']['resellers'])\n"
+        . "            || (\$ciniki['session']['user']['perms']&0x01) == 0x01\n"
+        . "            )\n"
+        . "        ) {\n"
+        . "        \$menu_item = array(\n"
+        . "            'priority'=>5000,\n"
+        . "            'label'=>'{$title}',\n"
+        . "            'edit'=>array('app'=>'{$package}.{$module}.main'),\n"
+        . "            );\n"
+        . "        \$rsp['menu_items'][] = \$menu_item;\n"
+        . "    }\n"
+        . "\n"
+        . "    return \$rsp;\n"
+        . "}\n"
+        . "?>\n"
+        . "";
+    if( !file_exists('hooks/uiSettings.php') ) {
+        file_put_contents('hooks/uiSettings.php', $file);
+    }
+}
 
 ?>
