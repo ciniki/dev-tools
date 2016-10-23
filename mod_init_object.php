@@ -140,8 +140,8 @@ generate_delete();
 generate_get();
 generate_history();
 generate_list();
-generate_update();
 generate_search();
+generate_update();
 generate_ui();
 
 print "done\n";
@@ -189,7 +189,6 @@ function generate_add() {
         . "//\n"
         . "// Returns\n"
         . "// -------\n"
-        . "// <rsp stat=\"ok\" id=\"42\">\n"
         . "//\n"
         . "function {$package}_{$module}_{$object}Add(&\$ciniki) {\n"
         . "    //\n"
@@ -284,13 +283,13 @@ function generate_add() {
         . "    // Ignore the result, as we don't want to stop user updates if this fails.\n"
         . "    //\n"
         . "    ciniki_core_loadMethod(\$ciniki, 'ciniki', 'businesses', 'private', 'updateModuleChangeDate');\n"
-        . "    ciniki_core_updateModuleChangeDate(\$ciniki, \$args['business_id'], '{$package}', '{$module}');\n"
+        . "    ciniki_businesses_updateModuleChangeDate(\$ciniki, \$args['business_id'], '{$package}', '{$module}');\n"
         . "\n"
         . "    //\n"
         . "    // Update the web index if enabled\n"
         . "    //\n"
         . "    ciniki_core_loadMethod(\$ciniki, 'ciniki', 'core', 'private', 'hookExec');\n"
-        . "    ciniki_businesses_hookExec(\$ciniki, \$args['business_id'], 'ciniki', 'web', 'indexObject', array('object'=>'{$package}.{$module}.{$object}', 'object_id'=>\${$object_id}));\n"
+        . "    ciniki_core_hookExec(\$ciniki, \$args['business_id'], 'ciniki', 'web', 'indexObject', array('object'=>'{$package}.{$module}.{$object}', 'object_id'=>\${$object_id}));\n"
         . "\n"
         . "    return array('stat'=>'ok', 'id'=>\${$object_id});\n"
         . "}\n"
@@ -331,7 +330,6 @@ function generate_delete() {
         . "//\n"
         . "// Returns\n"
         . "// -------\n"
-        . "// <rsp stat=\"ok\">\n"
         . "//\n"
         . "function {$package}_{$module}_{$object}Delete(&\$ciniki) {\n"
         . "    //\n"
@@ -380,13 +378,13 @@ function generate_delete() {
         . "    //\n"
         . "    // Check if any modules are currently using this object\n"
         . "    //\n"
-        . "    ciniki_core_loadMethod($ciniki, 'ciniki', 'core', 'private', 'objectCheckUsed');\n"
+        . "    ciniki_core_loadMethod(\$ciniki, 'ciniki', 'core', 'private', 'objectCheckUsed');\n"
         . "    \$rc = ciniki_core_objectCheckUsed(\$ciniki, \$args['business_id'], '{$package}.{$module}.{$object}', \$args['{$object_id}']);\n"
         . "    if( \$rc['stat'] != 'ok' ) {\n"
-        . "        return array('stat'=>'fail', 'err'=>array('code'=>'{$package}.{$module}." . $cur_code++ . "', 'msg'=>'Unable to check if {$object_def['name;']} is still being used.', 'err'=>\$rc['err']));\n"
+        . "        return array('stat'=>'fail', 'err'=>array('code'=>'{$package}.{$module}." . $cur_code++ . "', 'msg'=>'Unable to check if the " . strtolower($object_def['name']) . " is still being used.', 'err'=>\$rc['err']));\n"
         . "    }\n"
         . "    if( \$rc['used'] != 'no' ) {\n"
-        . "        return array('stat'=>'fail', 'err'=>array('code'=>'{$packge}.{$module}." . $cur_code++ . "', 'msg'=>'The {$object_def['name']} is still in use. ' . \$rc['msg']));\n"
+        . "        return array('stat'=>'fail', 'err'=>array('code'=>'{$package}.{$module}." . $cur_code++ . "', 'msg'=>'The " . strtolower($object_def['name']) . " is still in use. ' . \$rc['msg']));\n"
         . "    }\n"
         . "\n"
         . "    //\n"
@@ -601,10 +599,6 @@ function generate_history() {
         . "//\n"
         . "// Returns\n"
         . "// -------\n"
-        . "// <history>\n"
-        . "// <action user_id=\"2\" date=\"May 12, 2012 10:54 PM\" value=\"{$object_def['name']} Name\" age=\"2 months\" user_display_name=\"Andrew\" />\n"
-        . "// ...\n"
-        . "// </history>\n"
         . "//\n"
         . "function {$package}_{$module}_{$object}History(\$ciniki) {\n"
         . "    //\n"
@@ -629,7 +623,27 @@ function generate_history() {
         . "    if( \$rc['stat'] != 'ok' ) {\n"
         . "        return \$rc;\n"
         . "    }\n"
-        . "\n"
+        . "\n";
+    //
+    // Check for special fields and return reformated values
+    //
+    foreach($object_def['fields'] as $field_id => $field) {
+        if( isset($field['type']) && $field['type'] == 'date' ) {
+            $file .= "    if( \$args['field'] == '{$field_id}' ) {\n"
+                . "        ciniki_core_loadMethod(\$ciniki, 'ciniki', 'core', 'private', 'dbGetModuleHistoryReformat');\n"
+                . "        return ciniki_core_dbGetModuleHistoryReformat(\$ciniki, '{$package}.{$module}', '{$package}_{$module}_history', \$args['business_id'], '{$object_def['table']}', \$args['{$object_id}'], \$args['field'], 'date');\n"
+                . "    }\n"
+                . "\n";
+        }
+        elseif( isset($field['type']) && $field['type'] == 'currency' ) {
+            $file .= "    if( \$args['field'] == '{$field_id}' ) {\n"
+                . "        ciniki_core_loadMethod(\$ciniki, 'ciniki', 'core', 'private', 'dbGetModuleHistoryReformat');\n"
+                . "        return ciniki_core_dbGetModuleHistoryReformat(\$ciniki, '{$package}.{$module}', '{$package}_{$module}_history', \$args['business_id'], '{$object_def['table']}', \$args['{$object_id}'], \$args['field'], 'currency');\n"
+                . "    }\n"
+                . "\n";
+        }
+    }
+    $file .= ""
         . "    ciniki_core_loadMethod(\$ciniki, 'ciniki', 'core', 'private', 'dbGetModuleHistory');\n"
         . "    return ciniki_core_dbGetModuleHistory(\$ciniki, '{$package}.{$module}', '{$package}_{$module}_history', \$args['business_id'], '{$object_def['table']}', \$args['{$object_id}'], \$args['field']);\n"
         . "}\n"
@@ -912,7 +926,6 @@ function generate_update() {
         . "//\n"
         . "// Returns\n"
         . "// -------\n"
-        . "// <rsp stat='ok' />\n"
         . "//\n"
         . "function {$package}_{$module}_{$object}Update(&\$ciniki) {\n"
         . "    //\n"
@@ -1192,7 +1205,7 @@ function generate_ui() {
         . "    this.{$p_name} = new M.panel('{$object_def['name']}', '{$package}_{$module}_main', '{$p_name}', 'mc', 'medium mediumaside', 'sectioned', '{$package}.{$module}.main.{$p_name}');\n"
         . "    this.{$p_name}.data = null;\n"
         . "    this.{$p_name}.{$object_id} = 0;\n"
-        . ($options['nextprev'] == 'yes' ? "    this.nplist = [];\n" : "")
+        . ($options['nextprev'] == 'yes' ? "    this.{$p_name}.nplist = [];\n" : "")
         . "    this.{$p_name}.sections = {\n"
         . "";
     //
@@ -1228,12 +1241,18 @@ function generate_ui() {
             ) {
             continue;
         }
+        $required = '';
+        if( !isset($field['default']) ) {
+            $required = "'required':'yes', ";
+        }
         if( isset($field['type']) && $field['type'] == 'date' ) {
-            $file .= "            '$field_id':{'label':'{$field['name']}', 'type':'date'},\n";
+            $file .= "            '$field_id':{'label':'{$field['name']}', {$required}'type':'date'},\n";
         } elseif( isset($field['type']) && ($field['type'] == 'datetimetoutc' || $field['type'] == 'utcdatetime') ) {
-            $file .= "            '$field_id':{'label':'{$field['name']}', 'type':'date'},\n";
+            $file .= "            '$field_id':{'label':'{$field['name']}', {$required}'type':'date'},\n";
+        } elseif( isset($field['type']) && $field['type'] == 'currency' ) {
+            $file .= "            '$field_id':{'label':'{$field['name']}', {$required}'type':'text', 'size':'small'},\n";
         } else {
-            $file .= "            '$field_id':{'label':'{$field['name']}', 'type':'text'},\n";
+            $file .= "            '$field_id':{'label':'{$field['name']}', {$required}'type':'text'},\n";
         }
     }
     $file .= ""
@@ -1267,7 +1286,7 @@ function generate_ui() {
         . "            'save':{'label':'Save', 'fn':'M.{$package}_{$module}_main.{$p_name}.save();'},\n"
         . "            'delete':{'label':'Delete', \n"
         . "                'visible':function() {return M.{$package}_{$module}_main.{$p_name}.{$object_id} > 0 ? 'yes' : 'no'; },\n"
-        . "                'fn':'M.{$package}_{$module}_main.{$p_name}.save();'},\n"
+        . "                'fn':'M.{$package}_{$module}_main.{$p_name}.remove();'},\n"
         . "            }},\n"
         . "        };\n"
         . "    this.{$p_name}.fieldValue = function(s, i, d) { return this.data[i]; }\n"
@@ -1290,6 +1309,7 @@ function generate_ui() {
         . "    }\n"
         . "    this.{$p_name}.save = function(cb) {\n"
         . "        if( cb == null ) { cb = 'M.{$package}_{$module}_main.{$p_name}.close();'; }\n"
+        . "        if( !this.checkForm() ) { return false; }\n"
         . "        if( this.{$object_id} > 0 ) {\n"
         . "            var c = this.serializeForm('no');\n"
         . "            if( c != '' ) {\n"
