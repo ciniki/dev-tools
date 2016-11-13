@@ -18,6 +18,14 @@ $line = '';
 $autoexit = 'no';
 $auth_token = '';
 
+if( isset($argv[1]) && $argv[1] == '-l' ) {
+    $autoexit = 'yes';
+    check_logs('no');
+    $option = $GLOBALS['last_options'][count($GLOBALS['last_options'])-1];
+    print $option['method'] . ' ' . $option['args'] . "\n";
+    run_api($option['method'], $option['args']);
+}
+
 if( isset($argv[1]) && $argv[1] != '' ) {
 	$autoexit = 'yes';
 	for($i=1;$i<count($argv);$i++) {
@@ -41,7 +49,7 @@ $usage = "The following commands are valid: \n\n"
 	. "\n";
 
 if( $line == '' ) {
-	check_logs();
+	check_logs('yes');
 	print $prompt;
 }
 
@@ -88,7 +96,7 @@ while( $line !== FALSE ) {
 		print $last_apicmd . "\n";
 	}
 	else if( preg_match('/logs/', $line, $matches) ) {
-		check_logs();
+		check_logs('yes');
 	}
 	else if( $last_cmd == 'logs' && preg_match('/^([0-9]+)$/', $line, $matches) ) {
 //		print "======================== running " . $last_options[($matches[1]-1)]['method'] . "\n";
@@ -111,7 +119,7 @@ while( $line !== FALSE ) {
 	$line = trim(fgets(STDIN));
 }
 
-function check_logs() {
+function check_logs($display) {
 	$log = $GLOBALS['log'];
 	$logs = `tail -25 $log`;
 	$log_lines = explode("\n", $logs);
@@ -122,7 +130,9 @@ function check_logs() {
 			$options[$num_options] = array('log'=>$lline, 'method'=>$matches[1], 'api_key'=>$matches[2], 'auth_token'=>$matches[3], 
 				'args'=>$matches[4]);
 			$num_options++;
-			print "$num_options. $matches[1], $matches[4]\n";
+            if( $display == 'yes' ) {
+                print "$num_options. $matches[1], $matches[4]\n";
+            }
 		}
 	}
 	if( $num_options > 0 ) {

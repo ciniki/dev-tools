@@ -85,7 +85,8 @@ print "\n";
 //
 require('private/objects.php');
 $fn = "{$package}_{$module}_objects";
-$rc = $fn(array());
+$c = array();
+$rc = $fn($c);
 $objects = $rc['objects'];
 
 if( !isset($objects[strtolower($object)]) ) {
@@ -1041,7 +1042,7 @@ function generate_update() {
         . "    // Update the last_change date in the business modules\n"
         . "    // Ignore the result, as we don't want to stop user updates if this fails.\n"
         . "    //\n"
-        . "    ciniki_core_loadMethod(\$ciniki, '{$package}', 'businesses', 'private', 'updateModuleChangeDate');\n"
+        . "    ciniki_core_loadMethod(\$ciniki, 'ciniki', 'businesses', 'private', 'updateModuleChangeDate');\n"
         . "    ciniki_businesses_updateModuleChangeDate(\$ciniki, \$args['business_id'], '{$package}', '{$module}');\n"
         . "\n"
         . "    //\n"
@@ -1261,7 +1262,6 @@ function generate_ui() {
     // Setup the text blobs
     //
     foreach($object_def['fields'] as $field_id => $field) {
-        print_r($field);
         if( isset($field['dbtype']) ) {
             if( $field['dbtype'] == 'text' ) {
                 $file .= "        '_{$field_id}':{'label':'{$field['name']}', 'fields':{\n"
